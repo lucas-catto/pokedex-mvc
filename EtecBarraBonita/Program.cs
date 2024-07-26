@@ -1,6 +1,18 @@
+
+using System.Runtime.InteropServices.Marshalling;
+using EtecBarraBonita.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+string conexao = builder.Configuration.GetConnectionString("EtecConexao");
+var server     = ServerVersion.AutoDetect(conexao);
+
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseMySql(conexao, server)
+);
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
