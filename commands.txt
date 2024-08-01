@@ -1,4 +1,0 @@
-
-dotnet new sln --name EtecBarraBonita
-dotnet new mvc -o EtecBarraBonita
-dotnet sln add EtecBarraBonita/EtecBarraBonita.csproj
