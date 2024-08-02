@@ -1,6 +1,28 @@
+
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Pokedex.Data;
+using Pokedex.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+string conexao = builder.Configuration.GetConnectionString("PokedexConexao");
+
+var versao = ServerVersion.AutoDetect(conexao);
+
+builder.Services.AddDbContext<AppDbContext>(
+    options => options.UseMySql(
+        conexao,
+        versao
+    )
+);
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -18,6 +40,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
