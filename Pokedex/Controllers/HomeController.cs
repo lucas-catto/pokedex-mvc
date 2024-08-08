@@ -1,20 +1,31 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Pokedex.Data;
 using Pokedex.Models;
+using Pokedex.ViewModels;
 
 namespace Pokedex.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly AppDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
-    {
+    public HomeController(
+        ILogger<HomeController> logger,
+        AppDbContext context
+    ) {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
     {
+        HomeVM home = new() {
+            Pokemons = _context.Pokemons.ToList(),
+            Tipos = _context.Tipos.ToList()
+        };
+        
         return View();
     }
 
