@@ -31,8 +31,8 @@
 
         @foreach(var pokemon in Model.Pokemons)
         {
-            <div class="col">
-                <a href="#" class="text-decoration-none">
+            <div class="col @string.Join(' ', @pokemon.Tipos.Select(t => t.Tipo.Nome))">
+                <a asp-action="Details" asp-route-itemid="@pokemon.Numero" class="text-decoration-none">
                     <div class="card" style="background-color:@BackgroundColor(pokemon.Tipos.ToArray()[0].Tipo.Cor)">
                         <img src="@pokemon.Imagem" class="card-img-top" alt="@pokemon.Nome" />
 
