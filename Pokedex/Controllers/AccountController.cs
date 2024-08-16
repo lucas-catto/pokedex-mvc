@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Pokedex.ViewModels;
 
 namespace Pokedex.Controllers;
 
@@ -12,9 +13,15 @@ public class AccountController : Controller
         _logger = logger;
     }
 
-    public IActionResult Login()
+    [HttpGet]
+    public IActionResult Login(string returnUrl)
     {
-        return View();
+        LoginVM loginVM = new()
+        {
+            UrlRetorno = returnUrl ?? Url.Content("~/")
+        };
+
+        return View(loginVM);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
