@@ -1,4 +1,6 @@
 
+@model Pokedex.ViewModels.LoginVM
+
 @{
     Layout = null;
 }
@@ -26,35 +28,52 @@
 
     <body>
         <form class="form-signin" method="post">
+
+            <div asp-validation-summary="ModelOnly" hidden></div>
+            <input type="hidden" asp-for="UrlRetorno">
+            
             <div class="text-center text-white mb-4">
                 <img class="mb-2" src="~/img/favicons/android-chrome-192x192.png" alt="Logo" width="100" height="100">
                 <h1 class="display-4 my-3">Pokédex</h1>
                 <p class="h5">Acesso a Área Administrativa</p>
             </div>
+            
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email</label>
+                <input class="form-control" asp-for="Email">
+                <label asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-white"></span>
             </div>
+            
             <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
+                <input class="form-control" asp-for="Senha">
+                <label asp-for="Senha"></label>
+                <span asp-validation-for="Senha" class="text-white"></span>
             </div>
+            
             <div class="mb-3 form-check text-white">
-                <input type="checkbox" class="form-check-input" id="RememberMe">
-                <label class="form-check-label" for="RememberMe">Manter Conectado</label>
+                <input type="checkbox" class="form-check-input" asp-for="Lembrar">
+                <label class="form-check-label" asp-for="Lembrar">Manter Conectado?</label>
             </div>
+
             <button class="btn btn-lg w-100 btn-dark" type="submit">Entrar</button>
+
             <p class="mt-5 mb-3 text-white text-center">&copy; @DateTime.Now.Year</p>
         </form>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+        <partial name="_ValidationScriptsPartial"></partial>
+
         <script type="text/javascript">
+            
             let mensagemErro = '';
+            
             $(".validation-summary-errors ul li").each(function () {
                 mensagemErro += $(this).text() + '<br/>';
             });
+
             if (mensagemErro != '')
                 swal.fire(
                     'Acesso Negado',
