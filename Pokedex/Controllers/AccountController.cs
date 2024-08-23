@@ -10,8 +10,8 @@ namespace Pokedex.Controllers;
 public class AccountController : Controller
 {
     private readonly ILogger<AccountController> _logger;
-    private readonly ILogger<AccountController> _signInManager;
-    private readonly ILogger<AccountController> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly UserManager<IdentityUser> _userManager;
 
     public AccountController(
         ILogger<AccountController> logger,
@@ -48,17 +48,17 @@ public class AccountController : Controller
 
                 if (user != null)
                 {
-                    userName = user.username;
+                    username = user.UserName;
                 }
 
-                var result = await _signInManager.passwordSignInAsync(
+                var result = await _signInManager.PasswordSignInAsync(
                     username,
                     login.Senha,
                     login.Lembrar,
-                    lockoutOnFaliure: true
+                    lockoutOnFailure: true
                 );
 
-                if (result.isSucced)
+                if (result.Succeeded)
                 {
                     _logger.LogInformation($"Usuário {login.Email} acessou o sistema!");
                     return LocalRedirect(login.UrlRetorno);
